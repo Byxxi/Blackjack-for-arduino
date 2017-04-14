@@ -15,7 +15,7 @@ byte button_hit     = 11;
 #define K 10
 #define A 11
 
-
+//test change
 char value [13] = {2, 3, 4, 5, 6, 7, 8, 9, "X", "J", "Q", "K", "A"};
 char* suits [4] = {"H", "C", "D", "S"};
 char Cards[52];
