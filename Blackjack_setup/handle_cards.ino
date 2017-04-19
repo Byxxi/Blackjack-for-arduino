@@ -12,34 +12,33 @@ void new_hand() {
 
 
 void shuffle_cards() {
-  int i = 0;
-for (int cardsuit = 1 ; cardsuit <= 4 ; ++cardsuit) {
-    for (int cardnumber = 1 ; cardnumber <= 13 ; ++cardnumber) { 
-        Cards[i] = suits[cardsuit];value[cardnumber];
-        ++i;
-    }
+
 }
 
 
-  for(int print_cards = 0; print_cards < 52; print_cards++){//print all cards to serial to check for errors
+/*  for(int print_cards = 0; print_cards < 52; print_cards++){//print all cards to serial to check for errors
   Serial.print("card");
   Serial.println(Cards[print_cards]);
   }
-}
+}*/
 
 
 void draw_random_Player() {
-  Cards[Cardsdrawn] = Player[Player_card_count];
+//Cards[Cardsdrawn] = Player[Player_card_count];
   Player_card_count++;
   Cardsdrawn++;
+  Serial.print("draw");
+  Serial.println(Player[Player_card_count]);
   return;
 }
 
 
 void draw_random_CPU() {
-  Cards[Cardsdrawn] = CPU[CPU_card_count];
+//Cards[Cardsdrawn] = CPU[CPU_card_count];
   CPU_card_count++;
   Cardsdrawn++;
+  Serial.print("draw");
+  Serial.println(CPU[CPU_card_count]);
   return;
 }
 
