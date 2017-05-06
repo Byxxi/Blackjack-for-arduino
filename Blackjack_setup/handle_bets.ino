@@ -10,9 +10,6 @@ void Update_bet() {
   }
   
   lcd.print(BetAmount[Bet_picked]);
-  Serial.print("Bet");
-  Serial.println(BetAmount[Bet_picked]);
-  return;
 }
 
 

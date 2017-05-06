@@ -41,7 +41,7 @@ void draw_random_Player() {
   }
   Player[Player_card_count] = draw;
   Deck[3][draw]= '1';
-  Serial.print("draw[");
+  Serial.print("drawPlayer[");
   Serial.print(Player[Player_card_count]);
   Serial.println("]");
   Player_card_count++;
@@ -49,10 +49,8 @@ void draw_random_Player() {
 
 
 void display_cards_drawn() {
-  Serial.println("display cards");
   lcd.setCursor(3, 0); //Shows player's cards
   for (int x = 0; Player_card_count - x > 0; x++) {
-    Serial.println("player card");
     lcd.print(Deck[1][Player[x]]);
     lcd.print(Deck[2][Player[x]]);
        
@@ -60,7 +58,6 @@ void display_cards_drawn() {
   delay(200);
   lcd.setCursor(5, 1); //Shows CPU's cards, skips hidden card
   for (int x = 1; CPU_card_count - x > 0; x++) {
-    Serial.println("CPU card");
     lcd.print(Deck[1][CPU[x]]);
     lcd.print(Deck[2][CPU[x]]);
   }
@@ -77,7 +74,7 @@ void draw_random_CPU() {
   }
   CPU[CPU_card_count] = draw;
   Deck[3][draw]= '1';
-  Serial.print("draw[");
+  Serial.print("drawCPU[");
   Serial.print(CPU[CPU_card_count]);
   Serial.println("]");
   CPU_card_count++;

@@ -1,7 +1,7 @@
 void loop() {
   currenttime = millis();
 
-  if ((digitalRead(button_up) || digitalRead(button_down) || digitalRead(button_confirm) || digitalRead(button_hit)) && (currenttime > switchtimer + 200) || new_game || game_progress==10)
+  if ((digitalRead(button_up) || digitalRead(button_down) || digitalRead(button_confirm) || digitalRead(button_hit)) && (currenttime > switchtimer + 200) || new_game || game_progress==10 || game_progress==40)
   {
     new_game = 0;
     switchtimer = currenttime;  
@@ -52,22 +52,47 @@ void loop() {
           if (digitalRead(button_confirm)) {
             game_progress = 40;
           }
-          if (digitalRead(button_hit) && Player_card_count>4) {
+          if (digitalRead(button_hit) && Player_card_count<4) {
             draw_random_Player();
             display_cards_drawn();
           }
+          if (Player_card_count==4) {
+            game_progress = 40;
+          }
+        }
         break;
 
-      case 40: {//hand confirmed
-        Player_card_value();
-        Serial.println("40");
+      case 40: {//hand confirmed, CPU plays
         reveal_hidden();
-
-
+        Player_card_value();
+        CPU_card_value();
+        Serial.print("Player_value=");
+        Serial.println(Player_value_sum);
+        Serial.print("CPU_value=");
+        Serial.println(CPU_value_sum);
+       
+        if (Player_value_sum>21){
+          game_progress=50;
+        }
+        if (CPU_value_sum>21){
+          game_progress = 60;
         }
 
+        if (Player_value_sum>CPU_value_sum && CPU_card_count<4) {
+          draw_random_CPU();
+          display_cards_drawn();
+        }
 
         }
+      case 50: {//Player lost
+        new_hand();
+      }
+
+      case 60: {//player won
+        ALL=ALL+(BetAmount[Bet_picked]*2);
+        new_hand();
+      }
+
     }
   }
 }
