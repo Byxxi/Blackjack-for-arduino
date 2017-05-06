@@ -4,7 +4,7 @@ void loop() {
   if ((digitalRead(button_up) || digitalRead(button_down) || digitalRead(button_confirm)) && (currenttime > switchtimer + 200) || new_game )
   {
     new_game = 0;
-    switchtimer = currenttime;
+    switchtimer = currenttime;  
     
     switch (game_progress) {
       case 0: {
@@ -12,7 +12,9 @@ void loop() {
         }
       case 10: {
           Serial.println(Cardsdrawn);
-          
+          if (ALL < 25){
+            game_over();
+          }
           if (Cardsdrawn > 48) {
             game_over();
           }
@@ -67,7 +69,6 @@ void start_game() {
   lcd.print(BetAmount[Bet_picked]);
   shuffle_cards();
   game_progress = 10;
-  return;
 }
 
 

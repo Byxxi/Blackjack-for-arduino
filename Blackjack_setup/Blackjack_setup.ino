@@ -8,15 +8,15 @@ byte button_hit     = 11;
 
 char Deck[4][52]={
   {11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10,11,2,3,4,5,6,7,8,9,10,10,10,10}, //value
-  {'A',2,3,4,5,6,7,8,9,'X','J','Q','K','A',2,3,4,5,6,7,8,9,'X','J','Q','K','A',2,3,4,5,6,7,8,9,'X','J','Q','K','A',2,3,4,5,6,7,8,9,'X','J','Q','K',}, //print value
+  {'A','2','3','4','5','6','7','8','9','X','J','Q','K','A','2','3','4','5','6','7','8','9','X','J','Q','K','A','2','3','4','5','6','7','8','9','X','J','Q','K','A','2','3','4','5','6','7','8','9','X','J','Q','K'}, //print value
   {'H','H','H','H','H','H','H','H','H','H','H','H','H','C','C','C','C','C','C','C','C','C','C','C','C','C','D','D','D','D','D','D','D','D','D','D','D','D','D','S','S','S','S','S','S','S','S','S','S','S','S','S'}, //print suit
   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} //used
 };
 
-char Player[4][2];
-byte Player_ace_count = 0;
-byte Player_card_count = 0;
-char CPU[4][2];
+int Player[4];
+int Player_ace_count = 0;
+int Player_card_count = 0;
+int CPU[4];
 byte CPU_ace_count = 0;
 byte CPU_card_count = 0;
 
@@ -34,10 +34,10 @@ bool new_game = 1;
 
 void setup() {
   for (int null_player; null_player <= 3; null_player++) {
-    Player[null_player][0] = 0;
+    Player[null_player] = 0;
   }
   for (int null_cpu = 0; null_cpu <= 3; null_cpu++) {
-    CPU[null_cpu][0] = 0;
+    CPU[null_cpu] = 0;
   }
   pinMode(button_down, INPUT);
   pinMode(button_confirm, INPUT);

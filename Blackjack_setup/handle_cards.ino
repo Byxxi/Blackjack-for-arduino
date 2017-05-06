@@ -7,39 +7,41 @@ void new_hand() {
   display_cards_drawn();
   draw_random_CPU();
   display_cards_drawn();
-  return;
 }
 
 
 void shuffle_cards() {
-
-}
-
-
-/*  for(int print_cards = 0; print_cards < 52; print_cards++){//print all cards to serial to check for errors
-  Serial.print("card");
-  Serial.println(Cards[print_cards]);
+  Serial.println("print cards");
+  for (int print_cards = 0; print_cards < 52; print_cards++) { //print all cards to serial to check for errors
+    Serial.print(Deck[1][print_cards]);
+    Serial.println(Deck[2][print_cards]);
   }
-}*/
+  Serial.println("print cards");
+}
 
 
 void draw_random_Player() {
-//Cards[Cardsdrawn] = Player[Player_card_count];
+  Serial.print("player card count");
+  Serial.println(Player_card_count);
+  int draw = random(0, 51);
+  Player[Player_card_count] = draw;
+  Serial.print("draw[");
+  Serial.print(Player[Player_card_count]);
+  Serial.println("]");
   Player_card_count++;
-  Cardsdrawn++;
-  Serial.print("draw");
-  Serial.println(Player[Player_card_count]);
-  return;
 }
 
 
+
 void draw_random_CPU() {
-//Cards[Cardsdrawn] = CPU[CPU_card_count];
+  Serial.print("CPU card count");
+  Serial.println(CPU_card_count);
+  int draw = random(0, 51);
+  CPU[CPU_card_count] = draw;
+  Serial.print("draw[");
+  Serial.print(CPU[CPU_card_count]);
+  Serial.println("]");
   CPU_card_count++;
-  Cardsdrawn++;
-  Serial.print("draw");
-  Serial.println(CPU[CPU_card_count]);
-  return;
 }
 
 
@@ -58,14 +60,12 @@ void display_cards_drawn() {
     }
   }
   delay(200);
-  return;
 }
 
 
 void reveal_hidden() {
   lcd.setCursor(3, 1);
   lcd.print(CPU[0]);
-  return;
 }
 
 
@@ -76,5 +76,4 @@ void null_cards_drawn_display() {
       lcd.print(" ");
     }
   }
-  return;
 }

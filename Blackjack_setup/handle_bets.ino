@@ -24,6 +24,7 @@ void place_bet() {
   else if (BetAmount[Bet_picked] == 0) { //if bet is 0, fold and get new cards
     game_progress = 10;
     Serial.println("go to 10");
+    return;
   }
 
   else {
