@@ -1,29 +1,29 @@
 void loop() {
   currenttime = millis();
 
-  if ((digitalRead(button_up) || digitalRead(button_down) || digitalRead(button_confirm)) && (currenttime > switchtimer + 200) || new_game )
+  if ((digitalRead(button_up) || digitalRead(button_down) || digitalRead(button_confirm) || digitalRead(button_hit)) && (currenttime > switchtimer + 200) || new_game || game_progress==10)
   {
     new_game = 0;
     switchtimer = currenttime;  
     
-    switch (game_progress) {
+    switch (game_progress) {//new game
       case 0: {
           start_game();
         }
-      case 10: {
+      case 10: {//new hand
           Serial.println(Cardsdrawn);
           if (ALL < 25){
             game_over();
           }
-          if (Cardsdrawn > 48) {
+          else if (Cardsdrawn > 48) {
             game_over();
           }
           
           else
+            Serial.println("new hand");
             new_hand();
-          game_progress = 20;
         }
-      case 20: {
+      case 20: {//pick bet amount
           if (digitalRead(button_up)) {
             Bet_picked++;
           
@@ -47,8 +47,26 @@ void loop() {
             place_bet();
           }
         }
-      case 30: {
-          game_progress = 20;
+        break;
+      case 30: {//bet confirmed
+          if (digitalRead(button_confirm)) {
+            game_progress = 40;
+          }
+          if (digitalRead(button_hit) && Player_card_count>4) {
+            draw_random_Player();
+            display_cards_drawn();
+          }
+        break;
+
+      case 40: {//hand confirmed
+        Player_card_value();
+        Serial.println("40");
+        reveal_hidden();
+
+
+        }
+
+
         }
     }
   }
@@ -67,7 +85,6 @@ void start_game() {
   lcd.setCursor(9, 1);
   lcd.print("BET$");
   lcd.print(BetAmount[Bet_picked]);
-  shuffle_cards();
   game_progress = 10;
 }
 
