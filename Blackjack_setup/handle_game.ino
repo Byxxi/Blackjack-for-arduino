@@ -107,8 +107,8 @@ void start_game() {
   lcd.print(ALL);
   lcd.setCursor(0, 1);
   lcd.print("CPU");
-  lcd.setCursor(9, 1);
-  lcd.print("BET$");
+  lcd.setCursor(12, 1);
+  lcd.print("$");
   lcd.print(BetAmount[Bet_picked]);
   game_progress = 10;
 }

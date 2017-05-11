@@ -1,4 +1,5 @@
 void new_hand() {
+  Serial.println("new hand");
   null_cards_drawn_display();
   empty_hands();
   draw_random_Player();
@@ -8,6 +9,8 @@ void new_hand() {
   display_cards_drawn();
   draw_random_CPU();
   display_cards_drawn();
+  Player_value_sum = 0;
+  CPU_value_sum = 0;
   game_progress = 20;
 }
 
@@ -33,30 +36,33 @@ void empty_hands(){
 
   
 void draw_random_Player() {
-  Serial.print("player card count");
-  Serial.println(Player_card_count);
-  int draw = random(0, 51);
-  if (Deck[3][draw]=='1'){
-    draw_random_Player();
+  if (Cardsdrawn < 52){
+    int draw = random(0, 52);
+    if (Deck[3][draw]=='1'){
+      draw_random_Player();
+      return;
+    }
+    Player[Player_card_count] = draw;
+    Deck[3][draw]= '1';
+    Serial.print("Card#[");
+    Serial.print(Cardsdrawn);
+    Serial.print("]=");
+    Serial.print(Deck[1][Player[Player_card_count]]);
+    Serial.println(Deck[2][Player[Player_card_count]]);
+    Player_card_count++;
+    Cardsdrawn++;
   }
-  Player[Player_card_count] = draw;
-  Deck[3][draw]= '1';
-  Serial.print("drawPlayer[");
-  Serial.print(Player[Player_card_count]);
-  Serial.println("]");
-  Player_card_count++;
 }
 
-
 void display_cards_drawn() {
-  lcd.setCursor(3, 0); //Shows player's cards
+  lcd.setCursor(4, 0); //Shows player's cards
   for (int x = 0; Player_card_count - x > 0; x++) {
     lcd.print(Deck[1][Player[x]]);
     lcd.print(Deck[2][Player[x]]);
        
   }
   delay(200);
-  lcd.setCursor(5, 1); //Shows CPU's cards, skips hidden card
+  lcd.setCursor(6, 1); //Shows CPU's cards, skips hidden card
   for (int x = 1; CPU_card_count - x > 0; x++) {
     lcd.print(Deck[1][CPU[x]]);
     lcd.print(Deck[2][CPU[x]]);
@@ -66,31 +72,36 @@ void display_cards_drawn() {
 
 
 void draw_random_CPU() {
-  Serial.print("CPU card count");
-  Serial.println(CPU_card_count);
-  int draw = random(0, 51);
-    if (Deck[3][draw]=='1'){
-    draw_random_CPU();
+  if (Cardsdrawn < 52){
+    int draw = random(0, 52);
+      if (Deck[3][draw]=='1'){
+      draw_random_CPU();
+      return;
+    }
+    CPU[CPU_card_count] = draw;
+    Deck[3][draw]= '1';
+    Serial.print("Card#[");
+    Serial.print(Cardsdrawn);
+    Serial.print("]=");
+    Serial.print(Deck[1][CPU[CPU_card_count]]);
+    Serial.println(Deck[2][CPU[CPU_card_count]]);
+    CPU_card_count++;
+    Cardsdrawn++;
   }
-  CPU[CPU_card_count] = draw;
-  Deck[3][draw]= '1';
-  Serial.print("drawCPU[");
-  Serial.print(CPU[CPU_card_count]);
-  Serial.println("]");
-  CPU_card_count++;
 }
 
-
 void reveal_hidden() {
-  lcd.setCursor(3, 1);
+  lcd.setCursor(4, 1);
   lcd.print(Deck[1][CPU[0]]);
   lcd.print(Deck[2][CPU[0]]);
 }
 
 
 void Player_card_value() {
-  for(int x = 0; x < 4; x++){
+  Serial.print("player value =");
+  for(int x = 0; x < Player_card_count; x++){
     Player_value_sum = Player_value_sum + Deck[0][Player[x]];
+    Serial.println(Player_value_sum);
     if (Deck[1][Player[x]] == 'A'){
       Player_ace_count++;
     }
@@ -98,8 +109,10 @@ void Player_card_value() {
 }
 
 void CPU_card_value() {
-  for(int x = 0; x < 4; x++){
+  Serial.print("CPU value =");
+  for(int x = 0; x < CPU_card_count; x++){
     CPU_value_sum = CPU_value_sum + Deck[0][CPU[x]];
+    Serial.println(CPU_value_sum);
     if (Deck[1][Player[x]] == 'A'){
       Player_ace_count++;
     }
