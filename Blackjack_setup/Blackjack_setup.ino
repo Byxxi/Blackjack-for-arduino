@@ -31,7 +31,8 @@ unsigned long currenttime = 0;
 unsigned long previoustime = 0;
 unsigned long switchtimer = 0;
 bool new_game = 1;
-
+bool bool_game_over = 0;
+bool tick = 0;
 
 void setup() {
   pinMode(button_down, INPUT);

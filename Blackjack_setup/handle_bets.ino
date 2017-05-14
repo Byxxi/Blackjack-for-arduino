@@ -10,6 +10,17 @@ void Update_bet() {
   }
   
   lcd.print(BetAmount[Bet_picked]);
+
+  lcd.setCursor(13, 0);
+  if (ALL < 100){
+    lcd.print(" ");
+  }
+  
+  if (ALL < 10){
+    lcd.print("  ");
+  }
+
+  lcd.print(ALL);
 }
 
 
@@ -28,17 +39,20 @@ void place_bet() {
     ALL = ALL - BetAmount[Bet_picked];
     game_progress = 30;
     Serial.println("go to 30");
-
-    lcd.setCursor(13, 0);
-    if (ALL < 100){
-      lcd.print(" ");
-    }
-    
-    if (ALL < 10){
-      lcd.print("  ");
-    }
-    
-    lcd.print(ALL);
-    return;
+    Update_bet();
   }
+}
+
+
+void loss(){
+  game_progress = 10;
+  Serial.println("loss");
+}
+
+
+void win(){
+  ALL += BetAmount[Bet_picked]*2;
+  game_progress = 10;
+  Serial.println("win");
+  Update_bet();
 }

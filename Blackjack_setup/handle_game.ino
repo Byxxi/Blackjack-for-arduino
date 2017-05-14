@@ -1,7 +1,15 @@
 void loop() {
   currenttime = millis();
 
-  if ((digitalRead(button_up) || digitalRead(button_down) || digitalRead(button_confirm) || digitalRead(button_hit)) && (currenttime > switchtimer + 200) || new_game || game_progress==10 || game_progress==40)
+  if (currenttime > switchtimer + 150){
+    tick = 1;
+    switchtimer = currenttime;
+  }
+  else{
+    tick = 0;
+  }
+
+  if (tick && !bool_game_over)
   {
     new_game = 0;
     switchtimer = currenttime;  
@@ -20,7 +28,6 @@ void loop() {
           }
           
           else
-            Serial.println("new hand");
             new_hand();
         }
       case 20: {//pick bet amount
@@ -71,28 +78,20 @@ void loop() {
         Serial.print("CPU_value=");
         Serial.println(CPU_value_sum);
        
-        if (Player_value_sum>21){
-          game_progress=50;
-        }
-        if (CPU_value_sum>21){
-          game_progress = 60;
+        if (Player_value_sum > 21 || CPU_value_sum > Player_value_sum && CPU_value_sum < 22){
+          loss();
         }
 
-        if (Player_value_sum>CPU_value_sum && CPU_card_count<4) {
+        if (CPU_value_sum > 21 || CPU_card_count==4 && CPU_value_sum < Player_value_sum){
+          win();
+        }
+
+        if (Player_value_sum>=CPU_value_sum && CPU_card_count<4) {
           draw_random_CPU();
           display_cards_drawn();
+          CPU_card_value();
         }
-
-        }
-      case 50: {//Player lost
-        new_hand();
       }
-
-      case 60: {//player won
-        ALL=ALL+(BetAmount[Bet_picked]*2);
-        new_hand();
-      }
-
     }
   }
 }
@@ -121,4 +120,5 @@ void game_over() {
   lcd.setCursor(0, 1);
   lcd.print("$ left ");
   lcd.print(ALL);
+  bool_game_over = 1;
 }

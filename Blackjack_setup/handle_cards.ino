@@ -9,15 +9,13 @@ void new_hand() {
   display_cards_drawn();
   draw_random_CPU();
   display_cards_drawn();
-  Player_value_sum = 0;
-  CPU_value_sum = 0;
   game_progress = 20;
 }
 
 
 void null_cards_drawn_display() {
-  for (int y = 0; y >= 1; y++) {
-    for (int x = 0; x >= 7; x++) {
+  for (int y = 0; y <= 1; y++) {
+    for (int x = 4; x <= 11; x++) {
       lcd.setCursor(x, y);
       lcd.print(" ");
     }
@@ -98,23 +96,29 @@ void reveal_hidden() {
 
 
 void Player_card_value() {
+  Player_value_sum = 0;
   Serial.print("player value =");
   for(int x = 0; x < Player_card_count; x++){
     Player_value_sum = Player_value_sum + Deck[0][Player[x]];
-    Serial.println(Player_value_sum);
+    Serial.print(Player_value_sum);
+    Serial.print(",");
     if (Deck[1][Player[x]] == 'A'){
       Player_ace_count++;
     }
   }
+  Serial.println("");
 }
 
 void CPU_card_value() {
+  CPU_value_sum = 0;
   Serial.print("CPU value =");
   for(int x = 0; x < CPU_card_count; x++){
     CPU_value_sum = CPU_value_sum + Deck[0][CPU[x]];
-    Serial.println(CPU_value_sum);
+    Serial.print(CPU_value_sum);
+    Serial.print(",");
     if (Deck[1][Player[x]] == 'A'){
       Player_ace_count++;
     }
   }
+  Serial.println("");
 }
