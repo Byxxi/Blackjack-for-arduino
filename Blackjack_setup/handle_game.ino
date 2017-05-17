@@ -43,7 +43,7 @@ void loop() {
 
           if (digitalRead(button_down)) {
             Bet_picked--;
-            if (Bet_picked == 255) {
+            if (Bet_picked < 0) {
               Bet_picked = 4;
             }
             Serial.print(Bet_picked);

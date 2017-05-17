@@ -106,6 +106,14 @@ void Player_card_value() {
       Player_ace_count++;
     }
   }
+  if (Player_value_sum > 21){
+    if (Player_ace_count>=1){
+      if (Player_ace_count>=Player_ace_subracted){
+        Player_value_sum-=10;
+        Player_ace_subracted++;
+      }
+    }
+  }
   Serial.println("");
 }
 
@@ -116,8 +124,16 @@ void CPU_card_value() {
     CPU_value_sum = CPU_value_sum + Deck[0][CPU[x]];
     Serial.print(CPU_value_sum);
     Serial.print(",");
-    if (Deck[1][Player[x]] == 'A'){
-      Player_ace_count++;
+    if (Deck[1][CPU[x]] == 'A'){
+      CPU_ace_count++;
+    }
+  }
+  if (CPU_value_sum > 21){
+    if (CPU_ace_count>=1){
+      if (CPU_ace_count>=CPU_ace_subracted){
+        CPU_value_sum-=10;
+        CPU_ace_subracted++;
+      }
     }
   }
   Serial.println("");

@@ -15,15 +15,17 @@ char Deck[4][52] = {
 
 int Player[4];
 int Player_ace_count = 0;
+int Player_ace_subracted = 0;
 int Player_value_sum = 0;
 int Player_card_count = 0;
 int CPU[4];
 int CPU_ace_count = 0;
+int CPU_ace_subracted = 0;
 int CPU_card_count = 0;
 int CPU_value_sum = 0;
 
 int ALL = 100; //sum cash
-int BetAmount[5]  =   {0, 25, 50, 100, ALL};
+int BetAmount[5]  =   {0, 25, 50, 75, ALL};
 int Cardsdrawn = 0;
 int game_progress = 0;
 int Bet_picked = 0;
